@@ -8,7 +8,7 @@ A high-performance Dockerized implementation of **ComfyUI** pre-configured with 
 
 ## Features
 
-* **SageAttention Integration:** Achieve 2-5x speedups compared to FlashAttention using quantized attention mechanisms without losing end-to-end metrics.
+* **SageAttention Integration:** Achieve speedups compared to FlashAttention using quantized attention mechanisms without losing end-to-end metrics.
 * **Persistent Storage:** Mounted volumes for models, output, and custom nodes to ensure your data persists across container restarts.
 
 ---
