@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo Activate the virtual environment
+echo "Activate the virtual environment"
 source /app/comfyui_env/bin/activate
 
 echo "Building setuptools wheel..."

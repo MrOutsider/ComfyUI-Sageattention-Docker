@@ -4,9 +4,7 @@ FROM debian:trixie-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /app
-
-# 1. Enable Non-Free Repositories & Install System Dependencies
+# Enable Non-Free Repositories & Install System Dependencies
 # You MUST patch the sources to enable 'non-free' and 'contrib' to find nvidia-cuda-toolkit
 RUN sed -i 's/Components: main/Components: main contrib non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources \
   && apt-get update && apt-get install -y \
@@ -28,29 +26,42 @@ RUN sed -i 's/Components: main/Components: main contrib non-free non-free-firmwa
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-# 2. Clone ComfyUI
+# Create User
+RUN groupadd -g 1000 appuser && \
+    useradd -u 1000 -g appuser -m appuser
+
+# Copy Entrypoint with correct ownership
+COPY --chown=appuser:appuser entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Create /app directory and assign ownership to appuser
+RUN mkdir -p /app && chown appuser:appuser /app
+
+# --------------------------------------------------------
+# SWITCH TO USER 1000
+# All commands below this line will run as 'appuser'
+# --------------------------------------------------------
+USER 1000
+WORKDIR /app
+
+# Clone ComfyUI
 RUN git clone https://github.com/Comfy-Org/ComfyUI .
 
-# 3. Setup Virtual Environment
+# Setup Virtual Environment
 RUN python3 -m venv /app/comfyui_env
 ENV PATH="/app/comfyui_env/bin:$PATH"
 
-# 4. Install Core Requirements
+# Install Core Requirements
 # Installs PyTorch with CUDA 13.0 support
 RUN pip install --no-cache-dir torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
 
-# 5. Install Triton and SageAttention
+# Install Triton and SageAttention
 RUN pip install --no-cache-dir triton
 # We use --no-build-isolation so it uses the 'torch' we just installed above
 RUN pip install --no-cache-dir --no-build-isolation sageattention
 
-# 6. Install requirements for ComfyUI
+# Install requirements for ComfyUI
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 7. Setup Entrypoint Script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
 EXPOSE 8188
-
 ENTRYPOINT ["/entrypoint.sh"]
