@@ -4,6 +4,9 @@ FROM debian:trixie-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 
+# Define a variable for the ComfyUI tag
+ARG COMFYUI_TAG=v0.12.3
+
 # Enable Non-Free Repositories & Install System Dependencies
 # You MUST patch the sources to enable 'non-free' and 'contrib' to find nvidia-cuda-toolkit
 RUN sed -i 's/Components: main/Components: main contrib non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources \
@@ -44,8 +47,12 @@ RUN mkdir -p /app && chown appuser:appuser /app
 USER 1000
 WORKDIR /app
 
+# Validate the tag input (basic validation)
+RUN if [[ ! $COMFYUI_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then echo "Invalid tag format"; exit 1; fi
+
 # Clone ComfyUI
-RUN git clone https://github.com/Comfy-Org/ComfyUI .
+RUN git clone https://github.com/Comfy-Org/ComfyUI . && \
+git checkout $COMFYUI_TAG
 
 # Setup Virtual Environment
 RUN python3 -m venv /app/comfyui_env
