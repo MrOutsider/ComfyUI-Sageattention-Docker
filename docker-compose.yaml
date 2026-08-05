@@ -3,14 +3,15 @@ services:
   comfyui-boot:
     image: comfyui:latest
     container_name: comfyui
+    restart: unless-stopped
     stdin_open: true
     tty: true
     ports:
       - 8188:8188
     volumes:
       - ./data/user:/app/user:Z
-      - ./data/input:/app/input:Z
-      - ./data/output:/app/output:Z
+      - ./data/.input:/app/input:Z
+      - ./data/.output:/app/output:Z
       - ./data/models:/app/models:Z
       - ./data/custom_nodes:/app/custom_nodes:Z
     deploy:

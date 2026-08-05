@@ -63,6 +63,7 @@ RUN pip install --no-cache-dir --no-build-isolation sageattention
 
 # Install requirements for ComfyUI
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r manager_requirements.txt
 
 EXPOSE 8188
 ENTRYPOINT ["/entrypoint.sh"]
