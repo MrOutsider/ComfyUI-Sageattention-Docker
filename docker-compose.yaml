@@ -1,7 +1,7 @@
 ---
 services:
   comfyui-boot:
-    image: comfyui:latest
+    image: comfyui:v0.31.0
     container_name: comfyui
     restart: unless-stopped
     stdin_open: true
