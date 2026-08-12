@@ -7,10 +7,13 @@ source /app/comfyui_env/bin/activate
 echo "Building setuptools wheel..."
 pip install --upgrade pip setuptools wheel
 
+echo "Updating Comfyui Workflow Templates"
+pip install --upgrade --force-reinstall comfyui-workflow-templates
+
 echo "Checking for custom node requirements..."
 if [ -d "/app/custom_nodes" ]; then
   find /app/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \;
 fi
 
 echo "Starting ComfyUI..."
-exec python3 main.py --listen 0.0.0.0 --enable-manager --enable-manager-legacy-ui --use-sage-attention --lowvram --async-offload
+exec python3 main.py --listen 0.0.0.0 --use-sage-attention --lowvram --async-offload

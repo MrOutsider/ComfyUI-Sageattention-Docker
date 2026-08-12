@@ -46,7 +46,7 @@ USER 1000
 WORKDIR /app
 
 # Clone ComfyUI
-RUN git clone --branch v0.31.0 https://github.com/Comfy-Org/ComfyUI .
+RUN git clone --branch v0.32.0 https://github.com/Comfy-Org/ComfyUI .
 
 # Setup Virtual Environment
 RUN python3 -m venv /app/comfyui_env
@@ -63,7 +63,7 @@ RUN pip install --no-cache-dir --no-build-isolation sageattention
 
 # Install requirements for ComfyUI
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir -r manager_requirements.txt
+#RUN pip install --no-cache-dir -r manager_requirements.txt
 
 EXPOSE 8188
 ENTRYPOINT ["/entrypoint.sh"]
