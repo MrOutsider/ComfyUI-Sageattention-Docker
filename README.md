@@ -17,7 +17,7 @@ A high-performance Dockerized implementation of **ComfyUI** pre-configured with 
 
 Before you begin, ensure you have the following installed on your host system:
 
-* **NVIDIA Driver:** Version 610+ (Recommended 550+ for Blackwell/50-series).
+* **NVIDIA Driver:** Version 610+.
 * **Docker:** [Install Docker](https://docs.docker.com/get-docker/)
 * **NVIDIA Container Toolkit:** (Crucial for GPU passthrough).
 
