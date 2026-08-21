@@ -16,4 +16,5 @@ if [ -d "/app/custom_nodes" ]; then
 fi
 
 echo "Starting ComfyUI..."
-exec python3 main.py --listen 0.0.0.0 --use-sage-attention --lowvram --async-offload
+exec python3 main.py --listen 0.0.0.0 --lowvram --async-offload
+#exec python3 main.py --listen 0.0.0.0 --use-sage-attention --lowvram --async-offload

@@ -46,7 +46,7 @@ USER 1000
 WORKDIR /app
 
 # Clone ComfyUI
-RUN git clone --branch v0.32.0 https://github.com/Comfy-Org/ComfyUI .
+RUN git clone --branch v0.33.1 https://github.com/Comfy-Org/ComfyUI .
 
 # Setup Virtual Environment
 RUN python3 -m venv /app/comfyui_env
