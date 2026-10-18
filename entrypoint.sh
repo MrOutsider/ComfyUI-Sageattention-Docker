@@ -7,6 +7,9 @@ source /app/comfyui_env/bin/activate
 echo "Building setuptools wheel..."
 pip install --upgrade pip setuptools wheel
 
+echo "Updating Comfyui Requirments"
+pip install -r requirements.txt
+
 echo "Updating Comfyui Workflow Templates"
 pip install --upgrade --force-reinstall comfyui-workflow-templates
 
